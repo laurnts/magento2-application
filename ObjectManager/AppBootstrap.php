@@ -60,12 +60,10 @@ class AppBootstrap extends Bootstrap
             }
         } catch (Throwable $e) {
             $this->terminate($e);
-        } finally {
-            $this->resetState();
         }
     }
 
-    private function resetState(): void
+    public function resetState(): void
     {
         $objectManager = $this->getObjectManager();
         $reloadProcessor = $objectManager->get(ReloadProcessorInterface::class);
