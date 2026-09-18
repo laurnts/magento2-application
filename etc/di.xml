@@ -6,6 +6,11 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\App\Area\FrontNameResolver">
+        <arguments>
+            <argument name="request" xsi:type="object" shared="false">Magento\Framework\App\RequestInterface</argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\App\State\ReloadProcessorComposite">
         <arguments>
             <argument name="processors" xsi:type="array">
@@ -23,6 +28,7 @@
         </arguments>
     </type>
     <!-- Override Stateful Objects by stateless ones -->
+    <preference for="Magento\Framework\App\AreaList" type="Opengento\Application\App\AgnosticAreaList"/>
     <preference for="Magento\Framework\App\RequestInterface" type="Opengento\Application\App\Request\HttpRequest"/>
     <preference for="Magento\Framework\App\PlainTextRequestInterface" type="Opengento\Application\App\Request\HttpRequest"/>
     <preference for="Magento\Framework\App\RequestSafetyInterface" type="Opengento\Application\App\Request\HttpRequest"/>
