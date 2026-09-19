@@ -15,7 +15,9 @@ use Magento\Framework\ObjectManager\ConfigLoaderInterface;
 
 use function array_intersect_key;
 use function array_replace;
+use function hash;
 use function ksort;
+use function parse_url;
 use function preg_match;
 use function serialize;
 use function str_starts_with;
@@ -42,6 +44,7 @@ class BootstrapPool
 
     private AreaList $areaList;
     private AppObjectManagerFactory $factory;
+    /** @var AppBootstrap[] */
     private array $bootstraps = [];
 
     public function __construct(
@@ -61,9 +64,7 @@ class BootstrapPool
         $runtimeParameters = array_intersect_key($server, $this->allowedRuntimeInitParameters);
         ksort($runtimeParameters);
 
-        // One bootstrap per area and runtime parameters: Magento reads MAGE_RUN_CODE and
-        // MAGE_RUN_TYPE as init parameters in the constructors of shared objects.
-        return $this->bootstraps[$areaCode . serialize($runtimeParameters)]
+        return $this->bootstraps[hash('sha256', $areaCode . serialize($runtimeParameters))]
             ??= $this->createBootstrap($areaCode, $runtimeParameters);
     }
 
