@@ -15,7 +15,9 @@ use Magento\Framework\ObjectManager\ConfigLoaderInterface;
 
 use function array_intersect_key;
 use function array_replace;
+use function ksort;
 use function preg_match;
+use function serialize;
 use function str_starts_with;
 use function strtok;
 use function trim;
@@ -56,30 +58,33 @@ class BootstrapPool
     public function get(array $server, array $get): AppBootstrap
     {
         $areaCode = $this->resolveAreaCode($server, $get);
-        $bootstrap = $this->bootstraps[$areaCode] ??= $this->createBootstrap($areaCode);
-        // Ensure the server arguments are set with the current context
-        $bootstrap->getObjectManager()->configure(
-            [
-                'arguments' => array_replace(
-                    $this->globalParameters,
-                    $this->allowedRuntimeInitParameters,
-                    array_intersect_key($server, $this->allowedRuntimeInitParameters),
-                )
-            ]
-        );
+        $runtimeParameters = array_intersect_key($server, $this->allowedRuntimeInitParameters);
+        ksort($runtimeParameters);
 
-        return $bootstrap;
+        // One bootstrap per area and runtime parameters: Magento reads MAGE_RUN_CODE and
+        // MAGE_RUN_TYPE as init parameters in the constructors of shared objects.
+        return $this->bootstraps[$areaCode . serialize($runtimeParameters)]
+            ??= $this->createBootstrap($areaCode, $runtimeParameters);
     }
 
     /**
      * @throws LocalizedException
      */
-    private function createBootstrap(string $areaCode): AppBootstrap
+    private function createBootstrap(string $areaCode, array $runtimeParameters): AppBootstrap
     {
         $bootstrap = AppBootstrap::create(BP, $this->globalParameters, $this->factory);
         $objectManager = $bootstrap->getObjectManager();
         $objectManager->get(State::class)->setAreaCode($areaCode);
         $objectManager->configure($objectManager->get(ConfigLoaderInterface::class)->load($areaCode));
+        $objectManager->configure(
+            [
+                'arguments' => array_replace(
+                    $this->globalParameters,
+                    $this->allowedRuntimeInitParameters,
+                    $runtimeParameters,
+                )
+            ]
+        );
 
         return $bootstrap;
     }
