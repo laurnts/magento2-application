@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Opengento\Application;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\ObjectManagerInterface;
 use Opengento\Application\ObjectManager\AppBootstrap;
 use Opengento\Application\ObjectManager\BootstrapPool;
 
@@ -15,6 +17,7 @@ class Kernel
 {
     private BootstrapPool $bootstrapPool;
     private ?AppBootstrap $appBootstrap = null;
+    private ?ObjectManagerInterface $omInstance = null;
 
     public function __construct(array $initParams, private string $applicationType)
     {
@@ -25,6 +28,8 @@ class Kernel
     {
         try {
             $this->appBootstrap = $this->bootstrapPool->get($server, $get);
+            $this->omInstance = ObjectManager::getInstance();
+            ObjectManager::setInstance($this->appBootstrap->getObjectManager());
             $app = $this->appBootstrap->createApplication($this->applicationType);
             if ($app !== null) {
                 $this->appBootstrap->run($app);
@@ -38,5 +43,8 @@ class Kernel
     public function terminate(): void
     {
         $this->appBootstrap?->resetState();
+        if ($this->omInstance !== null) {
+            ObjectManager::setInstance($this->omInstance);
+        }
     }
 }
