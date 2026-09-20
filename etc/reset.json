@@ -14,6 +14,9 @@
   "\\Magento\\Backend\\Model\\View\\Page\\Builder": {
     "isBuilt": false
   },
+  "\\Magento\\Framework\\View\\Page\\Layout\\Reader": {
+    "pageLayoutMerge": null
+  },
   "\\Magento\\Framework\\View\\Page\\Config": {
     "metadata": {
       "charset": null,
@@ -43,10 +46,33 @@
     "_xml": null,
     "readerContext": null
   },
-  "\\Magento\\Checkout\\CustomerData\\Cart": {
-    "quote": null,
-    "summeryCount": null,
-    "_data": []
+  "\\Magento\\Framework\\View\\Layout\\ScheduledStructure\\Helper": {
+    "counter": 0
+  },
+  "\\Magento\\Framework\\View\\Layout\\ScheduledStructure": {
+    "scheduledStructure": [],
+    "scheduledData": [],
+    "scheduledElements": [],
+    "scheduledMoves": [],
+    "scheduledRemoves": [],
+    "scheduledPaths": [],
+    "elementsToSort": [],
+    "brokenParent": []
+  },
+  "\\Magento\\Framework\\View\\Asset\\GroupedCollection": {
+    "assets": [],
+    "groups": []
+  },
+  "\\Magento\\Framework\\View\\Design\\Theme\\FlyweightFactory": {
+    "themes": [],
+    "themesByPath": []
+  },
+  "\\Magento\\Framework\\View\\Element\\Template\\File\\Resolver": {
+    "_templateFilesMap": []
+  },
+  "\\Magento\\Theme\\Model\\View\\Design": {
+    "_area": null,
+    "_theme": null
   },
   "\\Magento\\Tax\\Plugin\\Checkout\\CustomerData\\Cart": {
     "quote": null,
@@ -54,6 +80,11 @@
   },
   "\\Magento\\Quote\\Model\\Quote\\TotalsCollectorList": {
     "totalCollector": null
+  },
+  "\\Magento\\Checkout\\CustomerData\\Cart": {
+    "quote": null,
+    "summeryCount": null,
+    "_data": []
   },
   "\\Magento\\Checkout\\Model\\Cart": {
     "_data": [],
@@ -94,57 +125,16 @@
     "_customerId": null,
     "_allowUsedFlat": true
   },
-  "\\Hyva\\Theme\\ViewModel\\HyvaCsp": {
-    "memoizedPolicies": null,
-    "memoizedAreaCode": null
-  },
-  "\\Hyva\\GraphqlTokens\\CustomerData\\CartPlugin": {
-    "quote": null
-  },
-  "\\Magento\\Theme\\Model\\View\\Design": {
-    "_area": null,
-    "_theme": null
-  },
-  "\\Magento\\Framework\\View\\Layout\\ScheduledStructure\\Helper": {
-    "counter": 0
-  },
-  "\\Magento\\Framework\\View\\Layout\\ScheduledStructure": {
-    "scheduledStructure": [],
-    "scheduledData": [],
-    "scheduledElements": [],
-    "scheduledMoves": [],
-    "scheduledRemoves": [],
-    "scheduledPaths": [],
-    "elementsToSort": [],
-    "brokenParent": []
-  },
-  "\\Magento\\Framework\\View\\Asset\\GroupedCollection": {
-    "assets": [],
-    "groups": []
-  },
   "\\Magento\\Csp\\Helper\\CspNonceProvider": {
     "nonce": ""
   },
   "\\Magento\\Csp\\Model\\Collector\\DynamicCollector": {
     "added": []
   },
-  "\\Magento\\Framework\\View\\Design\\Theme\\FlyweightFactory": {
-    "themes": [],
-    "themesByPath": []
-  },
-  "\\Magento\\Webapi\\Controller\\Rest\\InputParamsResolver": {
-    "route": null
-  },
-  "\\Magento\\Framework\\View\\Element\\Template\\File\\Resolver": {
-    "_templateFilesMap": []
-  },
-  "\\Magento\\Framework\\View\\Page\\Layout\\Reader": {
-    "pageLayoutMerge": null
-  },
   "\\Magento\\Security\\Model\\AdminSessionsManager": {
     "currentSession": null
   },
-  "\\MageOS\\Widgetkit\\Block\\Widgets\\ProductWidget": {
-    "productItemLayout": null
+  "\\Magento\\Webapi\\Controller\\Rest\\InputParamsResolver": {
+    "route": null
   }
 }
